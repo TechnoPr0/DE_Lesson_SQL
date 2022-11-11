@@ -8,7 +8,7 @@ CREATE TABLE  department(
     title VARCHAR(128) NOT NULL,
     full_name_chief VARCHAR(128) NOT NULL ,
     number_of_employees INT NOT NULL
-)
+);
 
 CREATE TABLE staff(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -16,20 +16,29 @@ CREATE TABLE staff(
     birthday DATE NOT NULL ,
     start_work DATE NOT NULL ,
     position VARCHAR(128) NOT NULL ,
-    level_id  INT REFERENCES level(id),
+    level_id INT,
     salary INT NOT NULL ,
-    departament_id INT REFERENCES  department(id),
-    driving_permit BOOLEAN
+    departament_id INT,
+    driving_permit BOOLEAN,
+
+    CONSTRAINT level_title
+        FOREIGN KEY (level_id)
+        REFERENCES level(id),
+    CONSTRAINT departament
+        FOREIGN KEY (departament_id)
+        REFERENCES  department(id)
 );
 
 CREATE TABLE  score(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY ,
-    staff_id integer REFERENCES staff(id),
+    staff_id INT,
     first_quarter VARCHAR(1) CHECK (score.first_quarter ~ '[A-E]'),
     second_quarter VARCHAR(1) CHECK (score.second_quarter ~ '[A-E]'),
     third_quarter VARCHAR(1) CHECK (score.third_quarter ~ '[A-E]'),
-    fourth_quarter VARCHAR(1) CHECK (score.fourth_quarter ~ '[A-E]')
-
+    fourth_quarter VARCHAR(1) CHECK (score.fourth_quarter ~ '[A-E]'),
+    CONSTRAINT staff_id
+        FOREIGN KEY (staff_id)
+        REFERENCES staff(id)
 );
 
 ---------------------------------------------

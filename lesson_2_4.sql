@@ -8,7 +8,7 @@ CREATE TABLE  department(
     title VARCHAR(128) NOT NULL,
     full_name_chief VARCHAR(128) NOT NULL ,
     number_of_employees INT NOT NULL
-)
+);
 
 CREATE TABLE staff(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -16,20 +16,29 @@ CREATE TABLE staff(
     birthday DATE NOT NULL ,
     start_work DATE NOT NULL ,
     position VARCHAR(128) NOT NULL ,
-    level_id  INT REFERENCES level(id),
+    level_id INT,
     salary INT NOT NULL ,
-    departament_id INT REFERENCES  department(id),
-    driving_permit BOOLEAN
+    departament_id INT,
+    driving_permit BOOLEAN,
+
+    CONSTRAINT level_title
+        FOREIGN KEY (level_id)
+        REFERENCES level(id),
+    CONSTRAINT departament
+        FOREIGN KEY (departament_id)
+        REFERENCES  department(id)
 );
 
 CREATE TABLE  score(
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY ,
-    staff_id integer REFERENCES staff(id),
+    staff_id INT,
     first_quarter VARCHAR(1) CHECK (score.first_quarter ~ '[A-E]'),
     second_quarter VARCHAR(1) CHECK (score.second_quarter ~ '[A-E]'),
     third_quarter VARCHAR(1) CHECK (score.third_quarter ~ '[A-E]'),
-    fourth_quarter VARCHAR(1) CHECK (score.fourth_quarter ~ '[A-E]')
-
+    fourth_quarter VARCHAR(1) CHECK (score.fourth_quarter ~ '[A-E]'),
+    CONSTRAINT staff_id
+        FOREIGN KEY (staff_id)
+        REFERENCES staff(id)
 );
 
 ---------------------------------------------
@@ -85,10 +94,26 @@ VALUES
 ('Киселева Майя Егоровна', '1995.06.24', '2022.10.15', 'Аналитик данных', 2, 150000, 3, 'False'),
 ('Кузнецов Мирон Валерьевич', '1999.09.30', '2022.11.03', 'Аналитик данных', 1, 65000, 3, 'False');
 
-
 --------------------------------------------------------------------------------------------------------------------
 
-SELECT SUBSTR (full_name, 1, POSITION(' ' in full_name)-1) AS name
-from staff
-ORDER BY salary DESC
-LIMIT 1;
+SELECT SUBSTR (full_name, 1, POSITION(' ' IN full_name)-1) AS name
+FROM staff
+WHERE salary=(SELECT MAX(salary) FROM staff);
+
+---------------------------------------------------------
+
+SELECT SUBSTR (full_name, 1, POSITION(' ' IN full_name)-1) AS name
+FROM staff
+ORDER BY name
+
+---------------------------------------------------------
+
+
+SELECT title, (
+    SELECT  AVG((NOW()::date - start_work)/365)AS work
+    FROM staff
+    WHERE level_id = level.id)
+FROM level
+
+
+-------------------------------------------------------
