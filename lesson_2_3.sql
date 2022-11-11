@@ -32,6 +32,8 @@ CREATE TABLE  score(
 
 );
 
+---------------------------------------------
+
 INSERT INTO level
 VALUES
     (1, 'Junior'),
@@ -53,6 +55,8 @@ VALUES
 (4, 'Королев Александр Александрович', '2000.03.25', '2019.04.15', 'Тестировщик', 1, 60000, 2, 'False'),
 (5, 'Павлова Полина Даниэльевна', '1988.05.29', '2010.10.03', 'Руководитель отдела тестирования', 4, 250000, 2, 'True');
 
+---------------------------------------------
+
 INSERT INTO score
 VALUES
 (1, 1, 'A', 'A', 'B', 'B'),
@@ -61,9 +65,12 @@ VALUES
 (4, 4, 'D', 'C', 'A', 'A'),
 (5, 5, 'A', 'B', 'B', 'A');
 
+---------------------------------------------
+
 INSERT INTO department
 VALUES
 (3, 'Отдел Интелектуального анализа данных', 'Пахомова Екатерина Вадимовна', 3);
+
 
 INSERT INTO  staff
 VALUES
@@ -72,19 +79,27 @@ VALUES
 (7, 'Киселева Майя Егоровна', '1995.06.24', '2022.10.15', 'Аналитик данных', 2, 150000, 3, 'False'),
 (8, 'Кузнецов Мирон Валерьевич', '1999.09.30', '2022.11.03', 'Аналитик данных', 1, 65000, 3, 'False');
 
+---------------------------------------------
+
 
 SELECT id, full_name, SUM((NOW()::date - start_work)/7) AS work_experience
 FROM staff
 GROUP BY id, full_name
+
+---------------------------------------------
 
 SELECT id, full_name, SUM((NOW()::date - start_work)/7) AS work_experience
 FROM staff
 GROUP BY id, full_name
 LIMIT 3;
 
+---------------------------------------------
+
 SELECT id
 FROM staff
 WHERE driving_permit = 'True'
+
+---------------------------------------------
 
 SELECT staff.id
 FROM staff
@@ -94,6 +109,8 @@ second_quarter LIKE '%D%' OR second_quarter LIKE  '%E%' OR
 third_quarter LIKE '%D%' OR third_quarter LIKE  '%E%' OR
 fourth_quarter LIKE '%D%' OR fourth_quarter LIKE  '%E%' ;
 
+---------------------------------------------
+
 SELECT MAX(salary)
 from staff;
 
@@ -102,10 +119,14 @@ FROM department
 ORDER BY number_of_employees DESC
 LIMIT 1;
 
+---------------------------------------------
+
 SELECT id, full_name, SUM((NOW()::date - start_work)/7) AS work_experience
 FROM staff
 GROUP BY  id
 ORDER BY start_work;
+
+---------------------------------------------
 
 SELECT  level.title, AVG(staff.salary)
 FROM level, staff
