@@ -101,3 +101,9 @@ SELECT title
 FROM department
 ORDER BY number_of_employees DESC
 LIMIT 1;
+
+SELECT id, full_name, SUM((NOW()::date - start_work)/7) AS work_experience
+FROM staff
+GROUP BY  id
+ORDER BY start_work;
+
