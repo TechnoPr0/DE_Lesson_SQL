@@ -107,3 +107,22 @@ FROM staff
 GROUP BY  id
 ORDER BY start_work;
 
+SELECT  level.title, AVG(staff.salary)
+FROM level, staff
+WHERE staff.level_id = '1' AND level.title = 'Junior'
+GROUP BY level.title;
+
+SELECT  level.title, AVG(staff.salary)
+FROM level, staff
+WHERE staff.level_id = '2' AND level.title = 'Middle'
+GROUP BY level.title;
+
+SELECT  level.title, AVG(staff.salary)
+FROM level, staff
+WHERE staff.level_id = '3' AND level.title = 'Senior'
+GROUP BY level.title;
+
+SELECT  level.title, AVG(staff.salary)
+FROM level, staff
+WHERE staff.level_id = '4' AND level.title = 'Lead'
+GROUP BY level.title;
