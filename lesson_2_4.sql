@@ -18,14 +18,14 @@ CREATE TABLE staff(
     position VARCHAR(128) NOT NULL ,
     level_id INT,
     salary INT NOT NULL ,
-    departament_id INT,
+    department_id INT,
     driving_permit BOOLEAN,
 
     CONSTRAINT level_title
         FOREIGN KEY (level_id)
         REFERENCES level(id),
-    CONSTRAINT departament
-        FOREIGN KEY (departament_id)
+    CONSTRAINT department
+        FOREIGN KEY (department_id)
         REFERENCES  department(id)
 );
 
@@ -59,7 +59,7 @@ VALUES
 
 
 INSERT INTO staff
-(full_name, birthday, start_work, position, level_id, salary, departament_id, driving_permit)
+(full_name, birthday, start_work, position, level_id, salary, department_id, driving_permit)
 VALUES
 ('Иванов Кирилл Егорович', '1989.01.20', '2009.02.02', 'Программист', 3, 190000, 1, 'True' ),
 ('Галкин Александр Алексеевич', '1980.11.20', '2000.12.01', 'Руководитель отдела разработки', 4, 250000, 1, 'True'),
@@ -87,7 +87,7 @@ VALUES
 
 
 INSERT INTO  staff
-(full_name, birthday, start_work, position, level_id, salary, departament_id, driving_permit)
+(full_name, birthday, start_work, position, level_id, salary, department_id, driving_permit)
 VALUES
 ('Пахомова Екатерина Вадимовна', '1990.04.12', '2022.09.20', 'Руководитель отлела Интелектуального анализа данных',
  4, 220000, 3, 'False'),
